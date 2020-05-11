@@ -1,4 +1,113 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.0.0">Jekyll</generator><link href="https://bharaniabhishek123.github.io/ml-journey/feed.xml" rel="self" type="application/atom+xml" /><link href="https://bharaniabhishek123.github.io/ml-journey/" rel="alternate" type="text/html" /><updated>2020-04-01T17:44:12-05:00</updated><id>https://bharaniabhishek123.github.io/ml-journey/feed.xml</id><title type="html">Abhishek Bharani ML Blog</title><subtitle>This blog uses fastai/fastpages to an easy to use blogging platform with support for Jupyter Notebooks.</subtitle><entry><title type="html">Fastpages Notebook Blog Post</title><link href="https://bharaniabhishek123.github.io/ml-journey/jupyter/2020/02/20/test.html" rel="alternate" type="text/html" title="Fastpages Notebook Blog Post" /><published>2020-02-20T00:00:00-06:00</published><updated>2020-02-20T00:00:00-06:00</updated><id>https://bharaniabhishek123.github.io/ml-journey/jupyter/2020/02/20/test</id><content type="html" xml:base="https://bharaniabhishek123.github.io/ml-journey/jupyter/2020/02/20/test.html">&lt;!--
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.0.0">Jekyll</generator><link href="https://bharaniabhishek123.github.io/ml-journey/feed.xml" rel="self" type="application/atom+xml" /><link href="https://bharaniabhishek123.github.io/ml-journey/" rel="alternate" type="text/html" /><updated>2020-05-11T08:37:16-05:00</updated><id>https://bharaniabhishek123.github.io/ml-journey/feed.xml</id><title type="html">Abhishek Bharani ML Blog</title><subtitle>This blog uses fastai/fastpages to an easy to use blogging platform with support for Jupyter Notebooks.</subtitle><entry><title type="html">Alexnet Vggnet Googlenet</title><link href="https://bharaniabhishek123.github.io/ml-journey/2020/05/10/Alexnet-VGGnet-Googlenet.html" rel="alternate" type="text/html" title="Alexnet Vggnet Googlenet" /><published>2020-05-10T00:00:00-05:00</published><updated>2020-05-10T00:00:00-05:00</updated><id>https://bharaniabhishek123.github.io/ml-journey/2020/05/10/Alexnet-VGGnet-Googlenet</id><content type="html" xml:base="https://bharaniabhishek123.github.io/ml-journey/2020/05/10/Alexnet-VGGnet-Googlenet.html">&lt;h2 id=&quot;full-simplified-alexnet-architecture&quot;&gt;Full (simplified) &lt;strong&gt;AlexNet&lt;/strong&gt; architecture:&lt;/h2&gt;
+
+&lt;p&gt;[227x227x3] INPUT &lt;br /&gt;
+[55x55x96] CONV1: 96 11x11 filters at stride 4, pad 0 &lt;br /&gt;
+[27x27x96] MAX POOL1: 3x3 filters at stride 2 &lt;br /&gt;
+[27x27x96] NORM1: Normalization layer &lt;br /&gt;
+[27x27x256] CONV2: 256 5x5 filters at stride 1, pad 2 &lt;br /&gt;
+[13x13x256] MAX POOL2: 3x3 filters at stride 2 &lt;br /&gt;
+[13x13x256] NORM2: Normalization layer &lt;br /&gt;
+[13x13x384] CONV3: 384 3x3 filters at stride 1, pad 1 &lt;br /&gt;
+[13x13x384] CONV4: 384 3x3 filters at stride 1, pad 1 &lt;br /&gt;
+[13x13x256] CONV5: 256 3x3 filters at stride 1, pad 1 &lt;br /&gt;
+[6x6x256] MAX POOL3: 3x3 filters at stride 2 &lt;br /&gt;
+[4096] FC6: 4096 neurons &lt;br /&gt;
+[4096] FC7: 4096 neurons &lt;br /&gt;
+[1000] FC8: 1000 neurons (class scores)&lt;/p&gt;
+
+&lt;h2 id=&quot;detailsretrospectives&quot;&gt;Details/Retrospectives&lt;/h2&gt;
+&lt;p&gt;First use of ReLU &lt;br /&gt;
+Layer norm &lt;br /&gt;
+Heavy Data Augmentation &lt;br /&gt;
+droput 0.5 &lt;br /&gt;
+batchsize 128 &lt;br /&gt;
+SGD Momentum 0.9 &lt;br /&gt;
+Learning rate 1e-2, reduced by 10 manually when validation acc. plateaus &lt;br /&gt;
+L2 weight decay 5e-4 &lt;br /&gt;
+7 CNN ensemble 18.2% -&amp;gt; 15.2%&lt;/p&gt;
+
+&lt;h2 id=&quot;vggnet-architecture&quot;&gt;VGGNet architecture&lt;/h2&gt;
+
+&lt;p&gt;Small filter size but deeper network. &lt;br /&gt;
+8 layers of AlexNet , 16-19 layers of VGGNet&lt;/p&gt;
+
+&lt;h2 id=&quot;detailsretrospectives-1&quot;&gt;Details/Retrospectives&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;only 3x3 conv. stride 1, pad 1 \&lt;/li&gt;
+  &lt;li&gt;and 2x2 max pool stride 2.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Why use smaller filters ? &lt;br /&gt;
+The stack of 3 conv layer filters of 3x3 stride 1 will have same effective receptive field as 1 conv layer of 7x7. &lt;br /&gt;
+Although the network will become deeper and will have more non-linearities. &lt;br /&gt;
+But will have fewer parameters &lt;br /&gt;
+3 * (3^2 C^2) vs (7^2 C^2) \&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;No layernorm&lt;/li&gt;
+  &lt;li&gt;Uses ensemble for better results&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;googlenet&quot;&gt;GoogleNet&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;22 layers&lt;/li&gt;
+  &lt;li&gt;few parameters 5 million&lt;/li&gt;
+  &lt;li&gt;Efficient “Inception Module”&lt;/li&gt;
+  &lt;li&gt;No FC (affine) layers&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;calculating-effective-receptive-field-size-over-input&quot;&gt;Calculating effective receptive field size over input.&lt;/h2&gt;
+
+&lt;p&gt;Effective receptive field is calculated over the input, and iteratively as : &lt;br /&gt;
+n = k + s (m - 1) &lt;br /&gt;
+n = output &lt;br /&gt;
+k = filter size &lt;br /&gt;
+m = no. of pixel in current activation map that we want receptive field for &lt;br /&gt;
+s = stride&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;receptive_field.jpg&quot; alt=&quot;Here is computation&quot; /&gt;&lt;/p&gt;</content><author><name></name></author><summary type="html">Full (simplified) AlexNet architecture:</summary></entry><entry><title type="html">Building an image classifier</title><link href="https://bharaniabhishek123.github.io/ml-journey/markdown/2020/04/03/Lesson2-Notes.html" rel="alternate" type="text/html" title="Building an image classifier" /><published>2020-04-03T00:00:00-05:00</published><updated>2020-04-03T00:00:00-05:00</updated><id>https://bharaniabhishek123.github.io/ml-journey/markdown/2020/04/03/Lesson2-Notes</id><content type="html" xml:base="https://bharaniabhishek123.github.io/ml-journey/markdown/2020/04/03/Lesson2-Notes.html">&lt;h2 id=&quot;datablock-api&quot;&gt;DataBlock api&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;container which build datasets and dataloaders&lt;/li&gt;
+  &lt;li&gt;expects to have 4 items passed as an positional parameters :
+    &lt;ul&gt;
+      &lt;li&gt;blocks (type of data)&lt;/li&gt;
+      &lt;li&gt;get_items&lt;/li&gt;
+      &lt;li&gt;splitter&lt;/li&gt;
+      &lt;li&gt;get_y&lt;/li&gt;
+      &lt;li&gt;item_tfms&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;once DataBlock object is created, we can call dataloaders on each path.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;useful-methods-or-class-used-in-the-lesson-2&quot;&gt;Useful methods or class used in the lesson 2&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;search_images_bing :&lt;/li&gt;
+  &lt;li&gt;TransformBlock : A basic wrapper that links default transforms for datablock api.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;newline&gt;    TransformBlock(type_tfms=None,item_tfms=None,batch_tfms=None,dl_type=None,dls_kwargs=None)
+- ImageBlock  : TransformBlock` for images of `cls = PILImage' 
+- CategoryBlock : TransformBlock` for single-label categorical targets
+- DataBlock : Generic Contrainer to build Datasets and DataLoaders
+&lt;newline&gt; DataBlock(blocks=None, dl_type=None, getters=None, n_inp=None, item_tfms=None, batch_tfms=None, get_items=None, splitter=None, get_y=None, get_x=None)
+- DataBlock has dataloaders class, dls.items = gives list of all elements.
+- aug_transforms : utility functions to create flip, zoom, rotate transforms.
+- ClassificationInterpretation : Sub-class of Interpretation, used for interpretation of classification models.
+- ImageClassifierCleaner : picks the one which the model is least confident about.
+
+Open Questions 
+1. What was the reason behind creation of class L . If it is only behaving like list of items.
+
+2. how many augmented images are created by function batch_tfms=aug_transforms. 
+
+3. After randomly splitting dev and train set. I did ImageClassifierCleaner on my cnn_learner and validation set had a white bear marked as black.
+   My question is we need to clean, validation set as well ? Although we are not training our model on validation set but since loss is computed on validation set. How big will be the impact if we don't curate our validation set correctly. 
+
+## Different resizing of images and data augmentation
+1. default is cropping and center of the image.
+2. Squish gives more detail
+3. RandomResizedCrop different part of image are zoomed. basically squished in different ways.
+4. aug_transform returns list of different augmentation. This are batch_tfms and happens on gpu. Fastai enables to run this on gpu.
+&lt;/newline&gt;&lt;/newline&gt;</content><author><name></name></author><summary type="html">DataBlock api container which build datasets and dataloaders expects to have 4 items passed as an positional parameters : blocks (type of data) get_items splitter get_y item_tfms</summary></entry><entry><title type="html">Fastpages Notebook Blog Post</title><link href="https://bharaniabhishek123.github.io/ml-journey/jupyter/2020/02/20/test.html" rel="alternate" type="text/html" title="Fastpages Notebook Blog Post" /><published>2020-02-20T00:00:00-06:00</published><updated>2020-02-20T00:00:00-06:00</updated><id>https://bharaniabhishek123.github.io/ml-journey/jupyter/2020/02/20/test</id><content type="html" xml:base="https://bharaniabhishek123.github.io/ml-journey/jupyter/2020/02/20/test.html">&lt;!--
 #################################################
 ### THIS FILE WAS AUTOGENERATED! DO NOT EDIT! ###
 #################################################

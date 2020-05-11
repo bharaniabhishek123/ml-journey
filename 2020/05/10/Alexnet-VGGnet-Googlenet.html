@@ -1,0 +1,67 @@
+<h2 id="full-simplified-alexnet-architecture">Full (simplified) <strong>AlexNet</strong> architecture:</h2>
+
+<p>[227x227x3] INPUT <br />
+[55x55x96] CONV1: 96 11x11 filters at stride 4, pad 0 <br />
+[27x27x96] MAX POOL1: 3x3 filters at stride 2 <br />
+[27x27x96] NORM1: Normalization layer <br />
+[27x27x256] CONV2: 256 5x5 filters at stride 1, pad 2 <br />
+[13x13x256] MAX POOL2: 3x3 filters at stride 2 <br />
+[13x13x256] NORM2: Normalization layer <br />
+[13x13x384] CONV3: 384 3x3 filters at stride 1, pad 1 <br />
+[13x13x384] CONV4: 384 3x3 filters at stride 1, pad 1 <br />
+[13x13x256] CONV5: 256 3x3 filters at stride 1, pad 1 <br />
+[6x6x256] MAX POOL3: 3x3 filters at stride 2 <br />
+[4096] FC6: 4096 neurons <br />
+[4096] FC7: 4096 neurons <br />
+[1000] FC8: 1000 neurons (class scores)</p>
+
+<h2 id="detailsretrospectives">Details/Retrospectives</h2>
+<p>First use of ReLU <br />
+Layer norm <br />
+Heavy Data Augmentation <br />
+droput 0.5 <br />
+batchsize 128 <br />
+SGD Momentum 0.9 <br />
+Learning rate 1e-2, reduced by 10 manually when validation acc. plateaus <br />
+L2 weight decay 5e-4 <br />
+7 CNN ensemble 18.2% -&gt; 15.2%</p>
+
+<h2 id="vggnet-architecture">VGGNet architecture</h2>
+
+<p>Small filter size but deeper network. <br />
+8 layers of AlexNet , 16-19 layers of VGGNet</p>
+
+<h2 id="detailsretrospectives-1">Details/Retrospectives</h2>
+<ul>
+  <li>only 3x3 conv. stride 1, pad 1 \</li>
+  <li>and 2x2 max pool stride 2.</li>
+</ul>
+
+<p>Why use smaller filters ? <br />
+The stack of 3 conv layer filters of 3x3 stride 1 will have same effective receptive field as 1 conv layer of 7x7. <br />
+Although the network will become deeper and will have more non-linearities. <br />
+But will have fewer parameters <br />
+3 * (3^2 C^2) vs (7^2 C^2) \</p>
+<ul>
+  <li>No layernorm</li>
+  <li>Uses ensemble for better results</li>
+</ul>
+
+<h2 id="googlenet">GoogleNet</h2>
+<ul>
+  <li>22 layers</li>
+  <li>few parameters 5 million</li>
+  <li>Efficient “Inception Module”</li>
+  <li>No FC (affine) layers</li>
+</ul>
+
+<h2 id="calculating-effective-receptive-field-size-over-input">Calculating effective receptive field size over input.</h2>
+
+<p>Effective receptive field is calculated over the input, and iteratively as : <br />
+n = k + s (m - 1) <br />
+n = output <br />
+k = filter size <br />
+m = no. of pixel in current activation map that we want receptive field for <br />
+s = stride</p>
+
+<p><img src="receptive_field.jpg" alt="Here is computation" /></p>
